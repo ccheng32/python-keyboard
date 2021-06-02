@@ -1,4 +1,4 @@
-from PYKB import *
+from keyboard import *
 
 keyboard = Keyboard()
 
