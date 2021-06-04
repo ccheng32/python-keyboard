@@ -27,7 +27,7 @@ keyboard.keymap = (
         '`',  F1,  F2,  F3,  F4,  F5,  F6,  F7,  F8,  F9, F10, F11, F12, DEL,
         MACRO(0), ___,  ___, ___, ___, ___, ___, ___, ___, ___,___,___,___,___,
         CAPS,TRANSPORT_PLAY_PAUSE,TRANSPORT_PREV_TRACK,TRANSPORT_NEXT_TRACK,AUDIO_MUTE, AUDIO_VOL_DOWN, AUDIO_VOL_UP, ___, ___, ___, ___, ___,      ___,
-        ___, BT1, BT2, BT3, BT4,BT5, ___,___, ___, ___, ___,       ___,
+        ___, BT1, BT2, BT3, BT4,BT5, MACRO(1), ___, ___, ___, ___,       ___,
         ___, ___, ___,                BT_TOGGLE,               ___, ___, ___,  ___
     ),
 
@@ -59,14 +59,27 @@ keyboard.keymap = (
     ),
 )
 
-
-def macro_handler(dev, n, is_down):
+def rshift_tab(dev, is_down):
     if is_down:
         dev.press(RSHIFT)
         dev.press(TAB)
     else:
         dev.release(TAB)
         dev.release(RSHIFT)
+
+def rshift_n(dev, is_down):
+    if is_down:
+        dev.press(RSHIFT)
+        dev.press(N)
+    else:
+        dev.release(N)
+        dev.release(RSHIFT)
+
+def macro_handler(dev, n, is_down):
+    if n == 0:
+        rshift_tab(dev, is_down)
+    elif n == 1:
+        rshift_n(dev, is_down)
 
 def pairs_handler(dev, n):
     dev.send_text('You just triggered pair keys #{}\n'.format(n))
